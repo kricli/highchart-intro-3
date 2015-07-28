@@ -1,6 +1,4 @@
 $(document).ready(function() {
-
-  //Top class
   var Charts = function(opts) {
     this.url = opts.url;
     this.titleText = opts.titleText;
@@ -20,8 +18,6 @@ $(document).ready(function() {
           }
         )
       }
-      console.log(this.rawData.length);
-      this.addToSeries('Raw',this.rawData)
     }
     $.ajax({
       context: this,
@@ -56,7 +52,6 @@ $(document).ready(function() {
         }
       )
     }
-    console.log(data)
     this.addToSeries(rate + ' weeks averages', data)
   }
 
@@ -70,8 +65,6 @@ $(document).ready(function() {
     $('#' + this.domID + '').highcharts(highchartConfig)
   }
 
-
-  //Instantiate different charts
   var gasolineChart = new Charts({
     url: 'https://www.quandl.com/api/v1/datasets/BTS_MM/RETAILGAS.json?trim_start=1995-01-02&trim_end=2012-10-15&auth_token=E6kNzExHjay2DNP8pKvB%27',
     titleText: 'Retail Gasoline Prices',
@@ -79,13 +72,10 @@ $(document).ready(function() {
     domID: 'gasolineChart'
   })
 
-
-
-  //running
   gasolineChart.getRawData();
+  gasolineChart.movingAverages(1);
   gasolineChart.movingAverages(4);
   gasolineChart.movingAverages(13);
-  gasolineChart.movingAverages(26);
+  gasolineChart.movingAverages(52);
   gasolineChart.generateGraph();
-
 })
